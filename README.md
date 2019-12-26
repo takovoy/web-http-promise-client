@@ -5,8 +5,15 @@ There are few static rest methods (get, post, put)
 
 Example:
 
-`HTTPClient.get("yourAwesomeURL", payload?, query?, noCache?, contentType?)`
+```javascript
+import { HTTPClient } from "web-http-promise-client/out/index";
 
-`HTTPClient.post("yourAwesomeURL", payload?, query?, noCache?, contentType?)`
+// payload, query, noCache, contentType - are not required arguments
+HTTPClient.get("yourAwesomeURL", payload, query, noCache, contentType)
+    .then(response => console.log(response))
+    .catch(xhrObject => console.log(xhrObject));
 
-`HTTPClient.put("yourAwesomeURL", payload?, query?, noCache?, contentType?)`
+// post and put methods have the same signature
+HTTPClient.post("yourAwesomeURL", payload, query, noCache, contentType);
+HTTPClient.put("yourAwesomeURL", payload, query, noCache, contentType);
+```
