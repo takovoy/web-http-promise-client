@@ -1,16 +1,24 @@
+enum HTTPClientContentTypesEnum {
+    json = "json",
+    html = "html",
+    text = "text",
+}
+
 export class HTTPClient {
-    private static contentTypes = {
-        json: "application/json; charset=UTF-8"
+    private static contentTypes: {[key: string]: string} = {
+        json: "application/json; charset=UTF-8",
+        html: "text/html; charset=utf-8",
+        text: "text/plain; charset=utf-8",
     };
 
-    private static makeRequest(
+    public static makeRequest<ResponseType>(
         url: string,
         method: string,
         payload: any,
         query: {[key: string]: string} = {},
         headers: {[key: string]: string} = {},
         responseType: XMLHttpRequestResponseType = "json"
-    ) {
+    ): Promise<ResponseType> {
         const formattedHeaders = JSON.parse(JSON.stringify(headers));
         if (formattedHeaders["Content-Type"] && this.contentTypes[formattedHeaders["Content-Type"]]) {
             formattedHeaders["Content-Type"] = this.contentTypes[formattedHeaders["Content-Type"]];
@@ -31,19 +39,19 @@ export class HTTPClient {
                 if (request.status >= 400) {
                     reject(request);
                 } else {
-                    resolve(request);
+                    resolve(request.response);
                 }
             };
         });
     }
 
-    static get(
+    static get<ResponseType>(
         url: string,
         payload: any = null,
         query: {[key: string]: string} = {},
         noCache: boolean = true,
-        contentType: XMLHttpRequestResponseType = "json",
-    ) {
+        contentType: HTTPClientContentTypesEnum = HTTPClientContentTypesEnum.json,
+    ): Promise<ResponseType> {
         let requestBody = payload;
         if (noCache) {
             query._ = Date.now().toString();
@@ -55,16 +63,16 @@ export class HTTPClient {
                 return Promise.reject({ error: "Invalid request payload" });
             }
         }
-        return this.makeRequest(url, "get", requestBody, query, { "Content-Type": contentType });
+        return this.makeRequest<ResponseType>(url, "get", requestBody, query, { "Content-Type": contentType });
     }
 
-    static post(
+    static post<ResponseType>(
         url: string,
         payload: any = null,
         query: {[key: string]: string} = {},
         noCache: boolean = true,
-        contentType: XMLHttpRequestResponseType = "json",
-    ) {
+        contentType: HTTPClientContentTypesEnum = HTTPClientContentTypesEnum.json,
+    ): Promise<ResponseType> {
         let requestBody = payload;
         if (noCache) {
             query._ = Date.now().toString();
@@ -76,16 +84,16 @@ export class HTTPClient {
                 return Promise.reject({ error: "Invalid request payload" });
             }
         }
-        return this.makeRequest(url, "post", requestBody, query, { "Content-Type": contentType });
+        return this.makeRequest<ResponseType>(url, "post", requestBody, query, { "Content-Type": contentType });
     }
 
-    static put(
+    static put<ResponseType>(
         url: string,
         payload: any = null,
         query: {[key: string]: string} = {},
         noCache: boolean = true,
-        contentType: XMLHttpRequestResponseType = "json",
-    ) {
+        contentType: HTTPClientContentTypesEnum = HTTPClientContentTypesEnum.json,
+    ): Promise<ResponseType> {
         let requestBody = payload;
         if (noCache) {
             query._ = Date.now().toString();
@@ -97,6 +105,6 @@ export class HTTPClient {
                 return Promise.reject({ error: "Invalid request payload" });
             }
         }
-        return this.makeRequest(url, "put", requestBody, query, { "Content-Type": contentType });
+        return this.makeRequest<ResponseType>(url, "put", requestBody, query, { "Content-Type": contentType });
     }
 }
