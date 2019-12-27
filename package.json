@@ -1,6 +1,6 @@
 {
   "name": "web-http-promise-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Frontend library - HTTP promise client",
   "main": "out/index.js",
   "dependencies": {
