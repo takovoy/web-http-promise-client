@@ -11,6 +11,10 @@ export class HTTPClient {
         text: "text/plain; charset=utf-8",
     };
 
+    public static getTransport() {
+        return new window["XMLHttpRequest"]();
+    }
+
     public static makeRequest<ResponseType>(
         url: string,
         method: string,
@@ -24,10 +28,10 @@ export class HTTPClient {
             formattedHeaders["Content-Type"] = this.contentTypes[formattedHeaders["Content-Type"]];
         }
         return new Promise((resolve, reject) => {
-            const request = new window["XMLHttpRequest"]();
-            const queryString = Object.keys(query || {})
-                .reduce((result, item) => result && `${result}&${item}=${query[item]}` || `?${item}=${query[item]}`, "");
-            request.open(method.toUpperCase(), `${url}${queryString}`);
+            const request = this.getTransport();
+            const params = new URLSearchParams();
+            Object.keys(query || {}).forEach(key => params.append(key, query[key]));
+            request.open(method.toUpperCase(), `${url}${query && Object.keys(query).length ? `?${params}` : ""}`);
             Object.keys(formattedHeaders || {}).forEach(key => request.setRequestHeader(key, formattedHeaders[key]));
             request.responseType = responseType;
             request.send(payload);
