@@ -1,8 +1,7 @@
 import {expect} from "chai";
 import "mocha";
 import {HTTPClient} from "./index";
-import {XHRMockNamespace} from "./xhr-mock.namespace";
-import XMLHttpRequestMock = XHRMockNamespace.XMLHttpRequestMock;
+import {XMLHttpRequestMock} from "./xhr.mock";
 
 HTTPClient.getTransport = () => {
     return new XMLHttpRequestMock() as any

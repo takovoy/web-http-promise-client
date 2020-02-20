@@ -1,5 +1,5 @@
-export namespace XHRMockNamespace {
-    class MockContextCaller {
+export namespace MockNamespace {
+    export class MockContextCaller {
         private counter = 0;
         private callsArgumentsList: IArguments[] = [];
 
@@ -23,7 +23,7 @@ export namespace XHRMockNamespace {
         }
     }
 
-    class MockContext {
+    export class MockContext {
         private calls: MockContextCaller[] = [];
         private instances: any[] = [];
 
@@ -55,33 +55,6 @@ export namespace XHRMockNamespace {
         public clear(): void {
             this.calls = [];
             this.instances = [];
-        }
-    }
-
-    export class XMLHttpRequestMock {
-        public static context: MockContext = new MockContext();
-
-        constructor() {
-            XMLHttpRequestMock.context.addInstance(this);
-        }
-
-        public status: number;
-        public readyState: number;
-
-        public set responseType(value: string) {
-            XMLHttpRequestMock.context.call("responseType", arguments);
-        }
-
-        public open(method: string, url: string) {
-            XMLHttpRequestMock.context.call("open", arguments);
-        }
-
-        public setRequestHeader(headerName: string, headerValue: string) {
-            XMLHttpRequestMock.context.call("setRequestHeader", arguments);
-        }
-
-        public send(payload: any) {
-            XMLHttpRequestMock.context.call("send", arguments);
         }
     }
 }

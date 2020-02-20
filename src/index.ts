@@ -1,4 +1,4 @@
-enum HTTPClientContentTypesEnum {
+export enum HTTPClientContentTypesEnum {
     json = "json",
     html = "html",
     text = "text",
