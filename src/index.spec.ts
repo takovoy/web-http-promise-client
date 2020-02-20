@@ -20,7 +20,7 @@ describe("HTTPClient tests", () => {
             expect(caller.getCallsCount()).equal(1, "Count of \"open\" method's calls is not equal 1");
         });
 
-        it("should correctly set request's method and url", function () {
+        it("should set request's method and url", function () {
             HTTPClient.makeRequest("someTestUrl", "GET", null);
             const caller = XMLHttpRequestMock.context.getMethodCalls("open");
             const args = caller.getArguments(0);
