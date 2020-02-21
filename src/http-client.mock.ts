@@ -1,6 +1,6 @@
 import {HTTPClient, HTTPClientContentTypesEnum} from "./index";
 import {XMLHttpRequestMock} from "./xhr.mock";
-import {MockNamespace} from "./mock.namespace";
+import {MockNamespace} from "test-mock.namespace";
 
 export class HttpClientMock {
     public context: MockNamespace.MockContext = new MockNamespace.MockContext();

@@ -1,4 +1,4 @@
-import {MockNamespace} from "./mock.namespace";
+import {MockNamespace} from "test-mock.namespace";
 
 export class XMLHttpRequestMock {
     public static context: MockNamespace.MockContext = new MockNamespace.MockContext();
