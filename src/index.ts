@@ -2,13 +2,15 @@ export enum HTTPClientContentTypesEnum {
     json = "json",
     html = "html",
     text = "text",
+    form = "form",
 }
 
 export class HTTPClient {
     private static contentTypes: {[key: string]: string} = {
-        json: "application/json; charset=UTF-8",
-        html: "text/html; charset=utf-8",
-        text: "text/plain; charset=utf-8",
+        [HTTPClientContentTypesEnum.json]: "application/json; charset=UTF-8",
+        [HTTPClientContentTypesEnum.html]: "text/html; charset=utf-8",
+        [HTTPClientContentTypesEnum.text]: "text/plain; charset=utf-8",
+        [HTTPClientContentTypesEnum.form]: "multipart/form-data; charset=utf-8",
     };
 
     public static getTransport() {
