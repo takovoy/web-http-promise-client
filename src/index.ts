@@ -10,7 +10,6 @@ export class HTTPClient {
         [HTTPClientContentTypesEnum.json]: "application/json; charset=UTF-8",
         [HTTPClientContentTypesEnum.html]: "text/html; charset=utf-8",
         [HTTPClientContentTypesEnum.text]: "text/plain; charset=utf-8",
-        [HTTPClientContentTypesEnum.form]: "multipart/form-data; charset=utf-8",
     };
 
     public static getTransport() {
@@ -28,6 +27,9 @@ export class HTTPClient {
         const formattedHeaders = JSON.parse(JSON.stringify(headers));
         if (formattedHeaders["Content-Type"] && this.contentTypes[formattedHeaders["Content-Type"]]) {
             formattedHeaders["Content-Type"] = this.contentTypes[formattedHeaders["Content-Type"]];
+        }
+        if (formattedHeaders["Content-Type"] === "form") {
+            delete formattedHeaders["Content-Type"];
         }
         return new Promise((resolve, reject) => {
             const request = this.getTransport();
