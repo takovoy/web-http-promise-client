@@ -22,7 +22,7 @@ export class HTTPClient {
         payload: any,
         query: {[key: string]: string} = {},
         headers: {[key: string]: string} = {},
-        responseType: XMLHttpRequestResponseType = "json"
+        responseType: XMLHttpRequestResponseType = "json",
     ): Promise<ResponseType> {
         const formattedHeaders = JSON.parse(JSON.stringify(headers));
         if (formattedHeaders["Content-Type"] && this.contentTypes[formattedHeaders["Content-Type"]]) {
@@ -59,6 +59,7 @@ export class HTTPClient {
         query: {[key: string]: string} = {},
         noCache: boolean = true,
         contentType: HTTPClientContentTypesEnum = HTTPClientContentTypesEnum.json,
+        responseType: XMLHttpRequestResponseType = "json",
     ): Promise<ResponseType> {
         let requestBody = payload;
         if (noCache) {
@@ -71,7 +72,7 @@ export class HTTPClient {
                 return Promise.reject({ error: "Invalid request payload" });
             }
         }
-        return this.makeRequest<ResponseType>(url, "get", requestBody, query, { "Content-Type": contentType });
+        return this.makeRequest<ResponseType>(url, "get", requestBody, query, { "Content-Type": contentType }, responseType);
     }
 
     static post<ResponseType>(
@@ -80,6 +81,7 @@ export class HTTPClient {
         query: {[key: string]: string} = {},
         noCache: boolean = true,
         contentType: HTTPClientContentTypesEnum = HTTPClientContentTypesEnum.json,
+        responseType: XMLHttpRequestResponseType = "json",
     ): Promise<ResponseType> {
         let requestBody = payload;
         if (noCache) {
@@ -92,7 +94,7 @@ export class HTTPClient {
                 return Promise.reject({ error: "Invalid request payload" });
             }
         }
-        return this.makeRequest<ResponseType>(url, "post", requestBody, query, { "Content-Type": contentType });
+        return this.makeRequest<ResponseType>(url, "post", requestBody, query, { "Content-Type": contentType }, responseType);
     }
 
     static put<ResponseType>(
@@ -101,6 +103,7 @@ export class HTTPClient {
         query: {[key: string]: string} = {},
         noCache: boolean = true,
         contentType: HTTPClientContentTypesEnum = HTTPClientContentTypesEnum.json,
+        responseType: XMLHttpRequestResponseType = "json",
     ): Promise<ResponseType> {
         let requestBody = payload;
         if (noCache) {
@@ -113,6 +116,6 @@ export class HTTPClient {
                 return Promise.reject({ error: "Invalid request payload" });
             }
         }
-        return this.makeRequest<ResponseType>(url, "put", requestBody, query, { "Content-Type": contentType });
+        return this.makeRequest<ResponseType>(url, "put", requestBody, query, { "Content-Type": contentType }, responseType);
     }
 }
